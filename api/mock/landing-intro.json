@@ -1,0 +1,10 @@
+{
+    "title": "Learning Today, Leading Tomorrow",
+    "description": "We are team of talented designers making websites with Bootstrap",
+    "img": "https://google.com/img.jpeg",
+    "ctas": [{
+        "label": "Get Started",
+        "href": "/courses",
+        "variant": "outlined"
+    }]
+}
