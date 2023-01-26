@@ -1,0 +1,27 @@
+[
+    {
+        "label": "Home",
+        "href": "/",
+        "variant": "clear"
+    },
+    {
+        "label": "About",
+        "href": "/about",
+        "variant": "clear"
+    },
+    {
+        "label": "Courses",
+        "href": "/courses",
+        "variant": "clear"
+    },
+    {
+        "label": "Contact",
+        "href": "/contact",
+        "variant": "clear"
+    },
+    {
+        "label": "Get Started",
+        "href": "/courses",
+        "variant": "contained"
+    }
+]
