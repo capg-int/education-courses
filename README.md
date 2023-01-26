@@ -6,7 +6,7 @@ Before proceeding to following steps, make sure you have **Node** installed in y
 
 1. Clone project.
 
-2. Open project's **apis** directory in CLI/Terminal.
+2. Open project's **middleware** directory in CLI/Terminal.
 
 3. Run `npm i` to install node modules. Ignore if you have already installed.
 
