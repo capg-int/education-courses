@@ -9,7 +9,6 @@ const contactUsRouter = require('./routes/contactUs')
 const aboutRouter = require('./routes/about');
 const coursesRouter = require("./routes/course");
 
-
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
