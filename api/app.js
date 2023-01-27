@@ -5,6 +5,7 @@ const authRouter = require('./routes/auth');
 const indexRouter = require("./routes");
 const utilityRouter = require('./routes/utils');
 const aboutRouter = require('./routes/about');
+const courseRouter = require("./routes/course");
 
 const app = express();
 app.use(express.json());
@@ -15,5 +16,7 @@ app.use('/auth', authRouter);
 app.use('/api', indexRouter);
 app.use('/api/utils', utilityRouter);
 app.use('/api/about', aboutRouter);
+
+app.use("/api/courses", courseRouter);
 
 module.exports = app;
