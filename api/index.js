@@ -41,5 +41,5 @@ function onError(error) {
  */
 
 function onListening() {
-    console.log("Listening...");
+    console.log("Node server is started...");
 }

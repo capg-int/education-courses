@@ -1,12 +1,12 @@
 const router = require('express').Router();
 
 const responseHandler = require('../middlewares/responseHandler');
-const about = require("../mock/about-intro.json");
+const aboutInto = require("../mock/about-intro.json");
 const aboutContent = require("../mock/about-content.json");
 const aboutReview = require("../mock/about-review.json")
 
 router.get('/intro', (req, res, next) => {
-    res.locals.data = about;
+    res.locals.data = aboutInto;
     next();
 }, responseHandler);
 

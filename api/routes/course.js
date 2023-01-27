@@ -1,6 +1,12 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();;
+
 const responseHandler = require("../middlewares/responseHandler");
+const aboutInto = require("../mock/about-intro.json");
+
+router.get('/intro', (req, res, next) => {
+  res.locals.data = aboutInto;
+  next();
+}, responseHandler);
 
 router.get(
   "/",
@@ -23,4 +29,5 @@ router.get(
   },
   responseHandler
 );
+
 module.exports = router;
