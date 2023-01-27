@@ -5,8 +5,13 @@ const db = require("./db");
 const authRouter = require('./routes/auth');
 const indexRouter = require("./routes");
 const utilityRouter = require('./routes/utils');
+
+const contactUsRouter = require('./routes/contactUs')
+
+
 const aboutRouter = require('./routes/about');
 const coursesRouter = require("./routes/course");
+
 
 const app = express();
 app.use(express.json());
@@ -27,7 +32,11 @@ db
 app.use('/auth', authRouter);
 app.use('/api', indexRouter);
 app.use('/api/utils', utilityRouter);
+
+app.use('/api/contactUs',contactUsRouter);
+
 app.use('/api/about', aboutRouter);
 app.use("/api/courses", coursesRouter);
+
 
 module.exports = app;
