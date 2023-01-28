@@ -1,3 +1,4 @@
+const config = require("../config");
 const Intros = require("../models/intros");
 
 const get = (req, res, next) => {
@@ -18,25 +19,40 @@ const get = (req, res, next) => {
 
 const set = (req, res, next) => {
     const {
-        body: intro
-    } = req;
+        referer
+    } = req.body;
 
-    Intros.
-        findOneAndReplace({
-            referer: intro.referer
-        }, intro, {
-            upsert: true
-        })
-        .exec()
-        .then(() => {
-            res.locals.data = intro;
-            next();
-        })
-        .catch((error) => {
-            res.locals.status = 400;
-            res.locals.message = JSON.stringify(error);
-            next();
-        });
+    const {
+        db: {
+            intro: {
+                whitlist: whitelistedPages
+            }
+        }
+    } = config;
+
+    if (whitelistedPages.includes(referer)) {
+        Intros.
+            findOneAndReplace({
+                referer
+            }, req.body, {
+                upsert: true
+            })
+            .exec()
+            .then(() => {
+                res.locals.data = req.body;
+                next();
+            })
+            .catch((error) => {
+                res.locals.status = 400;
+                res.locals.message = JSON.stringify(error);
+                next();
+            });
+
+    } else {
+        res.locals.status = 400;
+        res.locals.message = `referer '${referer}' is not whitelisted!`;
+        next();
+    }
 };
 
 module.exports = {
