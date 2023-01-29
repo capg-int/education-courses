@@ -5,6 +5,7 @@ const about = require("../mock/about-intro.json");
 const aboutContent = require("../mock/about-content.json");
 const aboutReview = require("../mock/about-review.json")
 
+
 router.get('/intro', (req, res, next) => {
     res.locals.data = about;
     next();
