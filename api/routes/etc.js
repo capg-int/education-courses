@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const router = require("express").Router();
 
 const introCtrl = require("../controllers/intro");
 const etcCtrl = require("../controllers/etc");
