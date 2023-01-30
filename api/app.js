@@ -8,6 +8,7 @@ const etcRouter = require('./routes/etc');
 const contactUsRouter = require('./routes/contactUs')
 const aboutRouter = require('./routes/about');
 const coursesRouter = require("./routes/course");
+const authGuard = require("./middlewares/authGuard");
 
 const app = express();
 app.use(express.json());
@@ -22,6 +23,8 @@ db.connect()
     console.log("Error connecting to DB: ");
     console.log(errStr);
   });
+
+app.use('/api/*', authGuard);
 
 /* Routes */
 app.use('/auth', authRouter);
