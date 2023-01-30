@@ -1,7 +1,7 @@
 module.exports = {
-    db: {
-        intro: {
-            whitlist: ['home', 'about', 'course', 'contact']
-        }
-    }
+  db: {
+    intro: {
+      whitlist: ["home", "about", "course", "contact"],
+    },
+  },
 };
