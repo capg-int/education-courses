@@ -22,8 +22,13 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const course = await Course.create(req.body);
-    res.status(201).send({ data: course });
+    const course = await Course.findOne({ name: req.body.name });
+    if (course) {
+      res.status(403).send("Course already exists");
+    } else {
+      const course = await Course.create(req.body);
+      res.status(201).send({ data: course });
+    }
   } catch (err) {
     console.log("Error", err);
   }
