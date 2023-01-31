@@ -1,27 +1,27 @@
-const {
-    Schema,
-    model
-} = require('mongoose');
+const { Schema, model } = require("mongoose");
 
-const ctaSchema = require('../db/reusableSchemas/ctaSchema');
+const ctaSchema = require("../db/reusableSchemas/ctaSchema");
 
-const introSchema = new Schema({
+const introSchema = new Schema(
+  {
     referer: {
-        type: String,
-        required: '{PATH} is required!'
+      type: String,
+      required: "{PATH} is required!",
     },
     title: {
-        type: String,
-        default: ""
+      type: String,
+      default: "",
     },
     description: {
-        type: String,
-        default: ""
+      type: String,
+      default: "",
     },
     img: String,
-    ctas: [ctaSchema]
-}, {
-    versionKey: false
-});
+    ctas: [ctaSchema],
+  },
+  {
+    versionKey: false,
+  }
+);
 
 module.exports = model("intros", introSchema);
