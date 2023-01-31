@@ -3,12 +3,12 @@ var cookieParser = require("cookie-parser");
 
 const db = require("./db");
 const authRouter = require("./routes/auth");
-const indexRouter = require("./routes");
-const etcRouter = require('./routes/etc');
-const contactRouter = require('./routes/contact')
+const homeRouter = require("./routes");
 const aboutRouter = require('./routes/about');
+const contactRouter = require('./routes/contact');
 const coursesRouter = require("./routes/courses");
-const authGuard = require("./middlewares/authGuard");
+const etcRouter = require('./routes/etc');
+const authGuard = require("./controllers/auth").validateToken;
 
 const app = express();
 app.use(express.json());
@@ -28,10 +28,10 @@ app.use('/api/*', authGuard);
 
 /* Routes */
 app.use('/auth', authRouter);
-app.use('/api', indexRouter);
-app.use('/api/etc', etcRouter);
-app.use('/api/contact', contactRouter);
+app.use('/api', homeRouter);
 app.use('/api/about', aboutRouter);
+app.use('/api/contact', contactRouter);
 app.use("/api/courses", coursesRouter);
+app.use('/api/etc', etcRouter);
 
 module.exports = app;

@@ -3,33 +3,9 @@ const router = require("express").Router();
 const authCtrl = require("../controllers/auth");
 const responseHandler = require("../middlewares/responseHandler");
 
-router.post("/register", authCtrl.register, (req, res, next) => {
-  const {
-    user: {
-      _id: userId
-    }
-  } = res.locals;
+router.post("/register", authCtrl.register, authCtrl.createToken, responseHandler);
 
-  res.locals.data = {
-    accessToken: authCtrl.createToken({ userId })
-  };
-
-  next();
-}, responseHandler);
-
-router.post("/login", authCtrl.login, (req, res, next) => {
-  const {
-    user: {
-      _id: userId
-    }
-  } = res.locals;
-
-  res.locals.data = {
-    accessToken: authCtrl.createToken({ userId })
-  };
-
-  next();
-}, responseHandler);
+router.post("/login", authCtrl.login, authCtrl.createToken, responseHandler);
 
 router.post("/forgotPassword", (req, res, next) => {
   const {

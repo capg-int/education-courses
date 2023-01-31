@@ -1,25 +1,45 @@
 const jwt = require('jsonwebtoken');
 
 const config = require('../config');
+const responseHandler = require('../middlewares/responseHandler');
 const Users = require("../models/users");
 
-const createToken = (data) => {
+const createToken = (req, res, next) => {
+    const {
+        _id: userId
+    } = res.locals.user;
     const {
         tokenSecret: secret,
         tokenExpiresIn: expiresIn
     } = config.auth;
 
-    return jwt.sign(data, secret, {
-        expiresIn
-    });
+    res.locals.data = {
+        accessToken: jwt.sign({ userId }, secret, { expiresIn })
+    };
+
+    next();
 };
 
-const validateToken = (token) => {
+const validateToken = (req, res, next) => {
     const {
-        tokenSecret: secret
-    } = config.auth;
+        authorization = ""
+    } = req.headers;
 
-    return jwt.verify(token, secret);
+    const [bearerLabel, token] = authorization.split(" ");
+    if (token) {
+        try {
+            const data = jwt.verify(token, config.auth.tokenSecret);
+            res.locals.auth = data;
+            return next();
+        } catch (e) {
+            console.log("Decryption error: ");
+            console.log(JSON.stringify(e));
+        }
+    }
+
+    res.locals.status = 401;
+    res.locals.message = 'Unauthorized user!';
+    responseHandler(req, res, next);
 };
 
 const register = (req, res, next) => {
@@ -58,7 +78,7 @@ const login = (req, res, next) => {
             password
         })
         .then(doc => {
-            if(doc == null) {
+            if (doc == null) {
                 const response = {
                     status: 400,
                     message: JSON.stringify(error)
