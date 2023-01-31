@@ -12,8 +12,11 @@ router.post("/login", (req, res, next) => {
   next();
 }, responseHandler);
 
-router.post("/validateToken", authGuard, (req, res, next) => {
-  res.locals.data = res.locals.auth;
+router.post("/register", (req, res, next) => {
+  const data = req.body;
+  res.locals.data = {
+    accessToken: authCtrl.createToken(data)
+  };
   next();
 }, responseHandler);
 

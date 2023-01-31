@@ -5,9 +5,9 @@ const db = require("./db");
 const authRouter = require("./routes/auth");
 const indexRouter = require("./routes");
 const etcRouter = require('./routes/etc');
-const contactUsRouter = require('./routes/contactUs')
+const contactRouter = require('./routes/contact')
 const aboutRouter = require('./routes/about');
-const coursesRouter = require("./routes/course");
+const coursesRouter = require("./routes/courses");
 const authGuard = require("./middlewares/authGuard");
 
 const app = express();
@@ -30,7 +30,7 @@ app.use('/api/*', authGuard);
 app.use('/auth', authRouter);
 app.use('/api', indexRouter);
 app.use('/api/etc', etcRouter);
-app.use('/api/contactUs',contactUsRouter);
+app.use('/api/contact', contactRouter);
 app.use('/api/about', aboutRouter);
 app.use("/api/courses", coursesRouter);
 
