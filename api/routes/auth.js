@@ -1,22 +1,33 @@
 const router = require("express").Router();
 
 const authCtrl = require("../controllers/auth");
-const authGuard = require("../middlewares/authGuard");
 const responseHandler = require("../middlewares/responseHandler");
 
-router.post("/login", (req, res, next) => {
-  const data = req.body;
+router.post("/register", authCtrl.register, (req, res, next) => {
+  const {
+    user: {
+      _id: userId
+    }
+  } = res.locals;
+
   res.locals.data = {
-    accessToken: authCtrl.createToken(data)
+    accessToken: authCtrl.createToken({ userId })
   };
+
   next();
 }, responseHandler);
 
-router.post("/register", (req, res, next) => {
-  const data = req.body;
+router.post("/login", authCtrl.login, (req, res, next) => {
+  const {
+    user: {
+      _id: userId
+    }
+  } = res.locals;
+
   res.locals.data = {
-    accessToken: authCtrl.createToken(data)
+    accessToken: authCtrl.createToken({ userId })
   };
+
   next();
 }, responseHandler);
 
