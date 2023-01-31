@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
+
 const responseHandler = require("../middlewares/responseHandler");
 
 router.get(
@@ -23,4 +23,5 @@ router.get(
   },
   responseHandler
 );
+
 module.exports = router;
