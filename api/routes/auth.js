@@ -20,4 +20,18 @@ router.post("/register", (req, res, next) => {
   next();
 }, responseHandler);
 
+router.post("/forgotPassword", (req, res, next) => {
+  const {
+    email
+  } = req.body;
+
+  console.log("Email: ", email);
+
+  res.locals.data = {
+    message: "Password reset link has been successfully sent to email address you provided!"
+  };
+
+  next();
+}, responseHandler);
+
 module.exports = router;
