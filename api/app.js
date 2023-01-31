@@ -8,7 +8,7 @@ const aboutRouter = require('./routes/about');
 const contactRouter = require('./routes/contact');
 const coursesRouter = require("./routes/courses");
 const etcRouter = require('./routes/etc');
-const authGuard = require("./controllers/auth").validateToken;
+const authCtrl = require("./controllers/auth");
 
 const app = express();
 app.use(express.json());
@@ -24,7 +24,7 @@ db.connect()
     console.log(errStr);
   });
 
-app.use('/api/*', authGuard);
+app.use('/api/*', authCtrl.validateToken);
 
 /* Routes */
 app.use('/auth', authRouter);
