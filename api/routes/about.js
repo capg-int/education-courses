@@ -1,11 +1,27 @@
 const router = require('express').Router();
-
+const paginate = require('express-paginate');
 const aboutModel = require("../models/about");
+ 
+router.use(paginate.middleware(5, 10));
 
-router.get("/content", async (req, res) => {
+router.get("/content", async (req, res, next) => {
   try {
-    const aboutContent = await aboutModel.find({}).lean().exec();
-    res.send({ data: aboutContent });
+    const [ results, itemCount ] = await Promise.all([
+      aboutModel.find({}).populate(this.name).limit(req.query.limit).skip(req.skip).sort({name: 'asc'}).lean().exec(),
+      aboutModel.count({})
+      
+    ]);
+    const pageCount = Math.ceil(itemCount / req.query.limit);
+    if (req.accepts('json')) {
+      res.json({
+        object: 'list',
+        has_more: paginate.hasNextPages(req)(pageCount),
+        pageCount,
+        itemCount,
+        pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+        data: results
+      });
+    } 
   } catch (err) {
     console.log("Error", err);
   }
@@ -25,10 +41,20 @@ router.post("/content", async (req, res) => {
   }
 });
 
-router.get("/reviews", async (req, res) => {
+router.get("/reviews", async (req, res, next) => {
   try {
-    const aboutReviews = await aboutModel.find({}).lean().exec();
-    res.send({ data: aboutReviews });
+    const [ results, itemCount ] = await Promise.all([
+      aboutModel.find({}).limit(req.query.limit).skip(req.skip).sort({name: 'asc'}).lean().exec(),
+      aboutModel.count({})
+    ]);
+    const pageCount = Math.ceil(itemCount / req.query.limit);
+    if (req.accepts('json')) {
+      res.json({
+        object: 'list',
+        has_more: paginate.hasNextPages(req)(pageCount),
+        data: results
+      });
+    } 
   } catch (err) {
     console.log("Error", err);
   }
