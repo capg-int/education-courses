@@ -1,27 +1,24 @@
-const router = require('express').Router();
-const paginate = require('express-paginate');
+const router = require("express").Router();
 const aboutModel = require("../models/about");
- 
-router.use(paginate.middleware(5, 10));
 
 router.get("/content", async (req, res, next) => {
+  const { page = 1, limit = 5 } = req.query;
+
   try {
-    const [ results, itemCount ] = await Promise.all([
-      aboutModel.find({}).populate(this.name).limit(req.query.limit).skip(req.skip).sort({name: 'asc'}).lean().exec(),
-      aboutModel.count({})
-      
-    ]);
-    const pageCount = Math.ceil(itemCount / req.query.limit);
-    if (req.accepts('json')) {
-      res.json({
-        object: 'list',
-        has_more: paginate.hasNextPages(req)(pageCount),
-        pageCount,
-        itemCount,
-        pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
-        data: results
-      });
-    } 
+    const about = await aboutModel
+      .find()
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .sort({ name: "asc" })
+      .exec();
+
+    const count = await aboutModel.count();
+
+    res.json({
+      about,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
   } catch (err) {
     console.log("Error", err);
   }
@@ -42,19 +39,23 @@ router.post("/content", async (req, res) => {
 });
 
 router.get("/reviews", async (req, res, next) => {
+  const { page = 1, limit = 5 } = req.query;
+
   try {
-    const [ results, itemCount ] = await Promise.all([
-      aboutModel.find({}).limit(req.query.limit).skip(req.skip).sort({name: 'asc'}).lean().exec(),
-      aboutModel.count({})
-    ]);
-    const pageCount = Math.ceil(itemCount / req.query.limit);
-    if (req.accepts('json')) {
-      res.json({
-        object: 'list',
-        has_more: paginate.hasNextPages(req)(pageCount),
-        data: results
-      });
-    } 
+    const about = await aboutModel
+      .find()
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .sort({ name: "asc" })
+      .exec();
+
+    const count = await aboutModel.count();
+
+    res.json({
+      about,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
   } catch (err) {
     console.log("Error", err);
   }
