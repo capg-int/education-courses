@@ -75,3 +75,5 @@ router.post("/reviews", async (req, res) => {
     console.log("Error", err);
   }
 });
+
+module.exports = router;
