@@ -11,9 +11,9 @@
     },
     "schemes": ["http"],
     "host": "localhost:3000",
-    "basePath": "/api/about",
+    "basePath": "/api",
     "paths" : {
-        "/content" : {
+        "/about/content" : {
             "get" : {
                 "summary" : "Get content",
                 "description": "Get content",
@@ -38,7 +38,7 @@
                 }
             }
         },
-        "/reviews" : {
+        "/about/reviews" : {
             "post" : {
                 "summary" : "Save reviews",
                 "description": "Save reviews",
@@ -79,7 +79,56 @@
                     }
                 }
             }
+        },
+        "/contact/info" : {
+            "get" : {
+                "summary" : "Get info",
+                "description": "Get info",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AboutResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            },
+            "post" : {
+                "summary" : "Save info",
+                "description": "save info",
+                "produces": ["application/json"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/AboutResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid status value",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
         }
+      
         
     }, 
     "definitions": {
