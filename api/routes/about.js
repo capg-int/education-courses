@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const aboutModel = require("../models/about");
 
+
 router.get("/content", async (req, res, next) => {
   const { page = 1, limit = 5 } = req.query;
 
@@ -74,5 +75,3 @@ router.post("/reviews", async (req, res) => {
     console.log("Error", err);
   }
 });
-
-module.exports = router;

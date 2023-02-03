@@ -4,6 +4,11 @@ const app = require("./app");
 
 const server = http.createServer(app);
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 server.listen(3000);
 server.on("error", onError);
 server.on("listening", onListening);
