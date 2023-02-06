@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const aboutSchema = mongoose.Schema({
   name: { type: "String", required: [true, "Name is required"] },
+  reviewer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "reviewer",
+    required: [true, "Reviewer is required"],
+  },
   image: { type: "String", required: [true, "Image is required"] },
   summary: { type: "String", required: [true, "Summary is required"] },
   description: { type: "String", required: [true, "Description is required"] },
