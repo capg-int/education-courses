@@ -147,7 +147,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/AboutResponse"
+                "$ref": "#/definitions/Contact"
               }
             }
           },
@@ -163,14 +163,24 @@
         "summary": "Save info",
         "description": "save info",
         "produces": ["application/json"],
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Create a contact",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Contact"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/AboutResponse"
+                "$ref": "#/definitions/Contact"
               }
             }
           },
@@ -229,6 +239,14 @@
         "likes": { "type": "number" },
         "views": { "type": "number" },
         "schedule": { "type": "string" }
+      }
+    },
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "location": { "type": "string" },
+        "email": { "type": "string" },
+        "phoneNumber": { "type": "string" }
       }
     },
     "InvalidResponse": {
