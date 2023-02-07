@@ -6,8 +6,21 @@ router.get("/content", async (req, res, next) => {
   const { page = 1, limit = 5 } = req.query;
 
   try {
+
+    db.abouts.aggregate( [
+      {
+        $lookup:
+          {
+            from: "users",
+            localField: "name",
+            foreignField: "username",
+            as: "finalName"
+          }
+     }
+   ] )
     const about = await aboutModel
       .find()
+      .populate({ path: "reviewer", select: "name designation -_id" })
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .sort({ name: "asc" })
